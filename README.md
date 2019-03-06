@@ -1,9 +1,9 @@
 # 과제2. mnist - 딥러닝(오차역전파) 
 - 과제 개요
-  - 2019년 3월 xx일 까지
+  - 2019년 3월 06일(목) 까지
   - 오차역전파를 활용한 mnist 데이터 예측 실습
   - 참고 링크 : https://scalalang2.github.io/posts/deeplearning-back-propagation-with-python/
-
+  - 참고 링크의 예제에 틀린 점이 많아서 돌아가는 코드가 되도록 수정을 했습니다. code_example.py를 참고하세요
 ---
 - Git 올리기 규칙
   - 자신의 이름으로 폴더를 생성하여 그안에 파일을 집어 넣기.
