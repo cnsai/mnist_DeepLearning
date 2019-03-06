@@ -1,5 +1,7 @@
 import numpy as np
 
+# 데이터 불러오기
+# 이번에는 mnist data를 csv로 불러오는 방식을 사용.
 data_file = open("C:/Users/idjoo/Desktop/mnist_train.csv", "r")
 training_data = data_file.readlines()
 data_file.close()
@@ -9,7 +11,11 @@ test_data = test_data_file.readlines()
 test_data_file.close()
 
 class DeepNeuralNetwork:
+    # self는 JAVA에서의 this와 비슷한 개념이다.
+
     def __init__(self, input_layers, hidden_layers, output_layers):
+        # Xavier/He 방법으로 가중치를 초기화 한다.
+        #wih는 input->hidden, who는 hidden->output 가중치(들이 모인 행렬) 의미
         self.inputs = input_layers
         self.hiddens = hidden_layers
         self.outputs = output_layers
@@ -26,6 +32,9 @@ class DeepNeuralNetwork:
         # 0번은 라벨이기 때문에 날렸다.
         data = data[1:]
 
+        # np.dot은 행렬곱을 해주는 numpy의 함수
+        # layer_1은 인풋과 인풋 가중치의 행렬곱
+        # output은 layer_1과 아웃풋 가중치의 행렬곱
         layer_1 = self.sigmoid(np.dot(data, self.wih))
         output = self.sigmoid(np.dot(layer_1, self.who))
         return output
@@ -51,22 +60,25 @@ class DeepNeuralNetwork:
                 self.wih = self.wih + lr * l1_e.T.dot(np.array(x[1:], ndmin=2)).T
 
                 if i % 2000 == 0 :
+                    # 데이터 2000개마다 정확도 출력
                     self.print_accuracy()
 
     # 현재 신경망의 정확도를 출력한다.
     def print_accuracy(self):
         matched = 0
+        counting = 0
         for x in self.test_data:
             label = int(x[0])
-            pd = self.predict(x)
-            predicted = np.argmax(pd)
+            predicted = np.argmax(self.predict(x))
             if label == predicted :
                 matched = matched + 1
-        print('현재 신경망의 정확도 : {0}'.format( matched/len(self.test_data)))
+            counting = counting + 1
+        print('현재 신경망의 정확도 : {0}'.format( matched/counting ))
 
     def sigmoid(self, x):
         return 1.0/(1.0 + np.exp(-x))
 
+    # 연산도중 오버플로우를 방지하기 위함, 일정한 성능의 학습을 위한 장치
     def normalize(self, x):
         return (x / 255.0) * 0.99 + 0.01
 
