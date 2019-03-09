@@ -40,7 +40,7 @@ class DeepNeuralNetwork:
         return output
 
     # training_data로 학습을 진행한다.
-    def train(self, training_data, lr=0.01, epoch=1):
+    def train(self, training_data, lr, epoch):
         for ech in range(0, epoch):
             for i, x in enumerate(training_data):
                 target = np.array(np.zeros(self.outputs) + 0.01, ndmin=2)
@@ -84,4 +84,6 @@ class DeepNeuralNetwork:
 
 network = DeepNeuralNetwork(input_layers=784, hidden_layers=100, output_layers=10)
 network.test_data = test_data
-network.train(training_data, lr=0.01, epoch=1)
+
+# epoch = 학습 횟수를 의미한다.
+network.train(training_data, lr=0.01, epoch=5)
